@@ -13,11 +13,13 @@ public class SimHandMove : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        //location.position = position;
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKey(KeyCode.W))
         {
             transform.Translate(Vector3.forward * Time.deltaTime * moveSpeed);
@@ -63,11 +65,22 @@ public class SimHandMove : MonoBehaviour
         #endregion
 
         // sprint?
-        DoSprint();
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            DoSprint(10);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            DoSprint(0.1f);
+        }
+
+        // Lerp Example
+        //transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime);
     }
 
-    public void DoSprint()
+    public void DoSprint(float sprintFactor)
     {
-        Debug.Log($"{transform.position}");
+        moveSpeed *= sprintFactor;      // 
+        //moveSpeed = acceleration;  //Mathf.Lerp(moveSpeed, acceleration, Time.deltaTime);
     }
 }
