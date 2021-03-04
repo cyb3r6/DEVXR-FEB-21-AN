@@ -9,7 +9,13 @@ public class MainIntro : MonoBehaviour
     {
         SceneManager.LoadScene(sceneBuildIndex, LoadSceneMode.Single);
     }
-  
+
+    public void LaunchScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+
     public void QuitApp()
     {
         Application.Quit();
