@@ -11,4 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VRMainScene.unity
     guid: 77da8b4ec6090d74c9f13af4cf9d3dfe
-  m_configObjects: {}
+  m_configObjects:
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 3282e18b98ed0774bb847d2aa6881cd0,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3a8e0041369da8447a2314c464eca380,
+      type: 2}
