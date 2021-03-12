@@ -9,11 +9,11 @@ public class VRInput : MonoBehaviour
 
 
     private string gripAxis;
-    
+
 
 
     void Start()
-    {
+    { 
         gripAxis = $"{hand}Grip";
     }
 
