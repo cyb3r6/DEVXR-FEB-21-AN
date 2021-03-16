@@ -4,11 +4,34 @@ using UnityEngine;
 
 public class SimHandGrab : MonoBehaviour
 {
-    // what we're touching
+    /// <summary>
+    /// What we're colliding with
+    /// </summary>
     public GameObject collidingObject;
 
-    // what we're holding
+    /// <summary>
+    /// What we're holding
+    /// </summary>
     public GameObject heldObject;
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public Transform snapPosition;
+
+    /// <summary>
+    /// How strong our throw is
+    /// </summary>
+    public float throwForce = 1f;
+
+    private SimHandMove controller;
+
+
+
+    private void Start()
+    {
+        controller = GetComponent<SimHandMove>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -23,13 +46,6 @@ public class SimHandGrab : MonoBehaviour
         }
     }
 
-    
-    void Start()
-    {
-        
-    }
-
-    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Mouse1))
@@ -54,13 +70,33 @@ public class SimHandGrab : MonoBehaviour
     public void Grab()
     {
         Debug.Log("Grabbing!");
-        heldObject.transform.SetParent(this.transform);
-
+        heldObject.transform.SetParent(snapPosition);
+        heldObject.transform.localPosition = Vector3.zero;
         heldObject.GetComponent<Rigidbody>().isKinematic = true;
+
+        var grabbable = heldObject.GetComponent<GrabbableObjectSimHand>();
+        if (grabbable)
+        {
+            grabbable.simHandController = this;
+            grabbable.isBeingHeld = true;
+            heldObject.transform.localPosition += grabbable.grabOffset;
+        }
     }
 
     public void Release()
     {
+        var grabbable = heldObject.GetComponent<GrabbableObjectSimHand>();
+        if (grabbable)
+        {
+            grabbable.isBeingHeld = false;
+            grabbable.simHandController = null;
+        }
+
+        // throw
+        Rigidbody rb = heldObject.GetComponent<Rigidbody>();
+        rb.velocity = controller.velocity * throwForce;
+        rb.angularVelocity = controller.angularVelocity * throwForce;
+
         heldObject.transform.SetParent(null);
         heldObject.GetComponent<Rigidbody>().isKinematic = false;
         heldObject = null;

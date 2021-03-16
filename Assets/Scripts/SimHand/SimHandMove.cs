@@ -9,6 +9,19 @@ public class SimHandMove : MonoBehaviour
     public float moveSpeed;
     public float turnSpeed;
 
+    /// <summary>
+    /// The velocity of the controller
+    /// </summary>
+    public Vector3 velocity;
+
+    /// <summary>
+    /// The angular velocity of the controller
+    /// </summary>
+    public Vector3 angularVelocity;
+
+    private Vector3 previousPosition;
+    private Vector3 previousAngularRotation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +86,12 @@ public class SimHandMove : MonoBehaviour
         {
             DoSprint(0.1f);
         }
+
+        // controller velocity
+        velocity = (transform.position - previousPosition) / Time.deltaTime;
+        previousPosition = transform.position;
+        angularVelocity = (transform.eulerAngles - previousAngularRotation) / Time.deltaTime;
+        previousAngularRotation = transform.eulerAngles;
 
         // Lerp Example
         //transform.position = Vector3.Lerp(transform.position, position, Time.deltaTime);

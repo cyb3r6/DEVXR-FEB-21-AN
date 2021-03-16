@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class VRGrab : MonoBehaviour
 {
-    // what we're touching
+    /// <summary>
+    /// What we're touching
+    /// </summary>
     public GameObject collidingObject;
 
-    // what we're holding
+    /// <summary>
+    /// What we're holding
+    /// </summary>
     public GameObject heldObject;
+
+    /// <summary>
+    /// How strong our throw is
+    /// </summary>
+    public float throwForce = 1f;
 
     private bool gripHeld;
 
@@ -63,12 +72,16 @@ public class VRGrab : MonoBehaviour
     {
         Debug.Log("Grabbing!");
         heldObject.transform.SetParent(this.transform);
-
         heldObject.GetComponent<Rigidbody>().isKinematic = true;
     }
 
     public void Release()
     {
+        // throw
+        Rigidbody rb = heldObject.GetComponent<Rigidbody>();
+        rb.velocity = controller.velocity * throwForce;
+        rb.angularVelocity = controller.angularVelocity * throwForce;
+
         heldObject.transform.SetParent(null);
         heldObject.GetComponent<Rigidbody>().isKinematic = false;
         heldObject = null;
