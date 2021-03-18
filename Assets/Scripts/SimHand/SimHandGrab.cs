@@ -65,6 +65,12 @@ public class SimHandGrab : MonoBehaviour
                 Release();
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.Mouse0) && heldObject)
+        {
+            // interaction
+            
+        }
     }
 
     public void Grab()

@@ -314,6 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d962783d513924098c2eff8439fe70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vRButton: {fileID: 906153427}
+  quitButton: {fileID: 1051609187}
 --- !u!1 &526190303
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,18 +624,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 906153428}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 85411763}
-        m_MethodName: LaunchScene
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 1
-          m_FloatArgument: 0
-          m_StringArgument: VRMainScene
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &906153428
 MonoBehaviour:
   m_ObjectHideFlags: 0

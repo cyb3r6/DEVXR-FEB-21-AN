@@ -19,6 +19,8 @@ public class VRGrab : MonoBehaviour
     /// </summary>
     public float throwForce = 1f;
 
+    public Transform snapPosition;
+
     private bool gripHeld;
 
     private VRInput controller;
@@ -65,18 +67,40 @@ public class VRGrab : MonoBehaviour
                 Release();
             }
         }
-
     }
 
     public void Grab()
     {
         Debug.Log("Grabbing!");
-        heldObject.transform.SetParent(this.transform);
+        heldObject.transform.SetParent(snapPosition);
+        heldObject.transform.localPosition = Vector3.zero;
         heldObject.GetComponent<Rigidbody>().isKinematic = true;
+
+        var grabbable = heldObject.GetComponent<GrabbableObjectVR>();
+        if (grabbable)
+        {
+            grabbable.controller = controller;
+            grabbable.isBeingHeld = true;
+            heldObject.transform.localPosition += grabbable.grabOffset;
+
+            // start listening for the trigger
+            controller.OnTriggerDown.AddListener(grabbable.OnInteraction);
+        }
+
     }
 
     public void Release()
     {
+        var grabbable = heldObject.GetComponent<GrabbableObjectVR>();
+        if (grabbable)
+        {
+            grabbable.isBeingHeld = false;
+            grabbable.controller = null;
+
+            // stop listening for trigger
+            controller.OnTriggerDown.RemoveListener(grabbable.OnInteraction);
+        }
+
         // throw
         Rigidbody rb = heldObject.GetComponent<Rigidbody>();
         rb.velocity = controller.velocity * throwForce;
