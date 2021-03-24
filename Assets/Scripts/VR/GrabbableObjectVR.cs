@@ -13,6 +13,6 @@ public class GrabbableObjectVR : MonoBehaviour
     public Vector3 grabOffset;
 
     // virtual void vs abstract void
-    public virtual void OnInteraction(){ }
+    public virtual void OnInteraction() { }
 
 }

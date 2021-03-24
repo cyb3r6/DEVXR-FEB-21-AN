@@ -73,7 +73,7 @@ public class SimHandMove : MonoBehaviour
 
         #region Rotation using Mouse
 
-        transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * turnSpeed, Space.Self);
+        //transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * turnSpeed, Space.Self);
 
         #endregion
 

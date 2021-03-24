@@ -5,12 +5,8 @@ using UnityEngine;
 public class PaintballPellet : MonoBehaviour
 {
     public List<Material> paints = new List<Material>();
-    private int paintIndex = 0;
-    
-    void Start()
-    {
-        
-    }
+    private static int paintIndex = 0;
+  
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -19,7 +15,10 @@ public class PaintballPellet : MonoBehaviour
             collision.collider.GetComponent<Renderer>().material = paints[paintIndex];
 
             paintIndex++;
-
+            if(paintIndex == paints.Count)
+            {
+                paintIndex = 0;
+            }
 
             //Destroy(this.gameObject);
         }
