@@ -81,6 +81,8 @@ public class VRGrab : MonoBehaviour
         {
             grabbable.controller = controller;
             grabbable.isBeingHeld = true;
+
+            // heldObject.transform.localPosition = heldObject.transform.localPosition + grabbable.grabOffset
             heldObject.transform.localPosition += grabbable.grabOffset;
 
             // start listening for the trigger
