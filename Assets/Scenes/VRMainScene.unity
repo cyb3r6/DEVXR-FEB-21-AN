@@ -2485,24 +2485,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   angularVelocity: {x: 0, y: 0, z: 0}
   thumbstick: {x: 0, y: 0}
-  OnGripDown:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGripUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGripUp:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerDown:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerUp:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &849502870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2743,7 +2725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1907188104338014, guid: 3d19250bdd4e0df4c8da855e85a8d70b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4434907143542138, guid: 3d19250bdd4e0df4c8da855e85a8d70b, type: 3}
       propertyPath: m_RootOrder
@@ -2797,12 +2779,17 @@ PrefabInstance:
     - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
         type: 3}
       propertyPath: lengthInSec
-      value: 11.58
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
         type: 3}
       propertyPath: ShapeModule.type
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
+        type: 3}
+      propertyPath: moveWithTransform
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
         type: 3}
@@ -2837,12 +2824,17 @@ PrefabInstance:
     - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
         type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
+        type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 198020576693072572, guid: 3d19250bdd4e0df4c8da855e85a8d70b,
         type: 3}
@@ -4877,24 +4869,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   angularVelocity: {x: 0, y: 0, z: 0}
   thumbstick: {x: 0, y: 0}
-  OnGripDown:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGripUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnGripUp:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerDown:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerUpdated:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTriggerUp:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &1815314157
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,10 +9,7 @@ public class AnimatedButton : MonoBehaviour
     public delegate void ButtonPressedEvent();
     public ButtonPressedEvent OnButtonPressed;
     
-    void Update()
-    {
-        
-    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")

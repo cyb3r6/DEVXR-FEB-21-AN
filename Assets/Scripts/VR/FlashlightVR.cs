@@ -6,7 +6,7 @@ public class FlashlightVR : GrabbableObjectVR
 {
     public Light flashLight;
 
-    public override void OnInteraction()
+    public override void OnInteractionStarted()
     {
         flashLight.enabled = !flashLight.enabled;
     }

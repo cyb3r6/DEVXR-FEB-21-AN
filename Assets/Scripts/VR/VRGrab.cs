@@ -37,17 +37,25 @@ public class VRGrab : MonoBehaviour
             collidingObject = null;
         }
     }
-
     
     void Awake()
     {
         controller = GetComponent<VRInput>();
+
+        controller.OnGripDown += Grab;
+        controller.OnGripUp += Release;
+
+    }
+    void OnDisable()
+    {
+        controller.OnGripDown -= Grab;
+        controller.OnGripUp -= Release;
     }
 
-    
+    #region using the Update
+    /*
     void Update()
     {
-
         if (controller.gripValue > 0.5f && gripHeld == false)
         {
             gripHeld = true;
@@ -68,48 +76,62 @@ public class VRGrab : MonoBehaviour
             }
         }
     }
-
+    */
+    #endregion
     public void Grab()
     {
-        Debug.Log("Grabbing!");
-        heldObject.transform.SetParent(snapPosition);
-        heldObject.transform.localPosition = Vector3.zero;
-        heldObject.GetComponent<Rigidbody>().isKinematic = true;
-
-        var grabbable = heldObject.GetComponent<GrabbableObjectVR>();
-        if (grabbable)
+        if(collidingObject && collidingObject.GetComponent<Rigidbody>())
         {
-            grabbable.controller = controller;
-            grabbable.isBeingHeld = true;
+            heldObject = collidingObject;
 
-            // heldObject.transform.localPosition = heldObject.transform.localPosition + grabbable.grabOffset
-            heldObject.transform.localPosition += grabbable.grabOffset;
+            heldObject.transform.SetParent(snapPosition);
 
-            // start listening for the trigger
-            controller.OnTriggerDown.AddListener(grabbable.OnInteraction);
+            heldObject.transform.localPosition = Vector3.zero;
+            heldObject.GetComponent<Rigidbody>().isKinematic = true;
+
+            var grabbable = heldObject.GetComponent<GrabbableObjectVR>();
+            if (grabbable)
+            {
+                grabbable.controller = controller;
+                grabbable.isBeingHeld = true;
+
+                // heldObject.transform.localPosition = heldObject.transform.localPosition + grabbable.grabOffset
+                heldObject.transform.localPosition += grabbable.grabOffset;
+
+                // start listening for the trigger
+                //controller.OnTriggerDown.AddListener(grabbable.OnInteraction);
+                controller.OnTriggerDown += grabbable.OnInteractionStarted;
+                controller.OnTriggerUpdated += grabbable.OnInteractionStopped;
+                controller.OnTriggerUp += grabbable.OnInteractionStopped;
+            }
         }
-
     }
 
     public void Release()
     {
-        var grabbable = heldObject.GetComponent<GrabbableObjectVR>();
-        if (grabbable)
+        if (heldObject)
         {
-            grabbable.isBeingHeld = false;
-            grabbable.controller = null;
+            var grabbable = heldObject.GetComponent<GrabbableObjectVR>();
+            if (grabbable)
+            {
+                grabbable.isBeingHeld = false;
+                grabbable.controller = null;
 
-            // stop listening for trigger
-            controller.OnTriggerDown.RemoveListener(grabbable.OnInteraction);
+                // stop listening for trigger
+                //controller.OnTriggerDown.RemoveListener(grabbable.OnInteraction);
+                controller.OnTriggerDown -= grabbable.OnInteractionStarted;
+                controller.OnTriggerUpdated -= grabbable.OnInteractionStopped;
+                controller.OnTriggerUp -= grabbable.OnInteractionStopped;
+            }
+
+            // throw
+            Rigidbody rb = heldObject.GetComponent<Rigidbody>();
+            rb.velocity = controller.velocity * throwForce;
+            rb.angularVelocity = controller.angularVelocity * throwForce;
+
+            heldObject.transform.SetParent(null);
+            heldObject.GetComponent<Rigidbody>().isKinematic = false;
+            heldObject = null;
         }
-
-        // throw
-        Rigidbody rb = heldObject.GetComponent<Rigidbody>();
-        rb.velocity = controller.velocity * throwForce;
-        rb.angularVelocity = controller.angularVelocity * throwForce;
-
-        heldObject.transform.SetParent(null);
-        heldObject.GetComponent<Rigidbody>().isKinematic = false;
-        heldObject = null;
     }
 }
