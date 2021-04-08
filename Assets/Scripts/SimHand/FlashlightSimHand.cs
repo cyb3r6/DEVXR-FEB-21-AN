@@ -20,13 +20,13 @@ public class FlashlightSimHand : GrabbableObjectSimHand
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
-                OnInteraction();
+                OnInteractionStarted();
             }
             
         }
     }
 
-    public override void OnInteraction()
+    public override void OnInteractionStarted()
     {
         flashLight.enabled = !flashLight.enabled;
     }

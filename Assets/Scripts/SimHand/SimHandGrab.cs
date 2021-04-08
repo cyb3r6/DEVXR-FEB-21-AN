@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class SimHandGrab : MonoBehaviour
 {
@@ -26,7 +27,10 @@ public class SimHandGrab : MonoBehaviour
 
     private SimHandMove controller;
 
-
+    // SimHand equivalent for controller triggers
+    public UnityAction OnTriggerDown;
+    public UnityAction OnTriggerUpdated;
+    public UnityAction OnTriggerUp;
 
     private void Start()
     {
@@ -68,8 +72,17 @@ public class SimHandGrab : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Mouse0) && heldObject)
         {
-            // interaction
+            OnTriggerDown?.Invoke();
             
+        }
+        if (Input.GetKey(KeyCode.Mouse0) && heldObject)
+        {
+            OnTriggerUpdated?.Invoke();
+
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0) && heldObject)
+        {
+            OnTriggerUp?.Invoke();
         }
     }
 
@@ -86,6 +99,10 @@ public class SimHandGrab : MonoBehaviour
             grabbable.simHandController = this;
             grabbable.isBeingHeld = true;
             heldObject.transform.localPosition += grabbable.grabOffset;
+
+            OnTriggerDown += grabbable.OnInteractionStarted;
+            OnTriggerUpdated += grabbable.OnInteractionStopped;
+            OnTriggerUp += grabbable.OnInteractionStopped;
         }
     }
 
@@ -96,6 +113,10 @@ public class SimHandGrab : MonoBehaviour
         {
             grabbable.isBeingHeld = false;
             grabbable.simHandController = null;
+
+            OnTriggerDown -= grabbable.OnInteractionStarted;
+            OnTriggerUpdated -= grabbable.OnInteractionStopped;
+            OnTriggerUp -= grabbable.OnInteractionStopped;
         }
 
         // throw
